@@ -1,0 +1,15 @@
+export const MODULES = {
+  AUTH: 'AUTH',
+  USER: 'USER',
+  ORGANIZATION: 'ORGANIZATION',
+  CATALOG: 'CATALOG',
+  CLIENT: 'CLIENT',
+  TERMINAL: 'TERMINAL',
+  TRANSACTION: 'TRANSACTION',
+  PAYMENT: 'PAYMENT',
+  AUDIT: 'AUDIT',
+  REPORT: 'REPORT',
+  SETTINGS: 'SETTINGS'
+} as const;
+
+export type ModuleType = typeof MODULES[keyof typeof MODULES];
