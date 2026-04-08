@@ -84,7 +84,7 @@ export default function Page() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Politiques de mot de passe</h1>
         <p className="text-muted-foreground">
-          Configurez les règles de sécurité pour les mots de passe des utilisateurs AvePay
+          Configurez les règles de sécurité pour les mots de passe des utilisateurs
         </p>
       </div>
 

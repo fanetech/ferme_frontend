@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useAuth from "@/store/useAuth";
 import { AUTH_ROUTES, DASHBOARD_ROUTES } from "@/lib/constants/routes";
-import AvePayLoader from "@/components/avepay-loader";
+import AppLoader from "@/components/app-loader";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -16,16 +16,15 @@ export function AuthGuard({ children, requireAuth = true, fallback }: AuthGuardP
   const { isLoggedIn, isLoading, initialize } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [ready, setReady] = useState(false);
 
   // Initialize auth state from cookie on mount
   useEffect(() => {
     initialize();
-    setReady(true);
   }, []);
 
+  // Wait for loading to finish before making redirect decisions
   useEffect(() => {
-    if (!ready) return;
+    if (isLoading) return;
 
     if (requireAuth && !isLoggedIn) {
       const loginUrl =
@@ -43,14 +42,14 @@ export function AuthGuard({ children, requireAuth = true, fallback }: AuthGuardP
       const redirectUrl = searchParams.get("redirect");
       router.push(redirectUrl || DASHBOARD_ROUTES.DEFAULT);
     }
-  }, [ready, isLoggedIn, requireAuth, router, pathname]);
+  }, [isLoading, isLoggedIn, requireAuth, router, pathname]);
 
   // Still initializing
-  if (!ready || isLoading) {
+  if (isLoading) {
     return (
       fallback || (
         <div className="flex min-h-screen items-center justify-center">
-          <AvePayLoader />
+          <AppLoader />
         </div>
       )
     );
@@ -60,7 +59,7 @@ export function AuthGuard({ children, requireAuth = true, fallback }: AuthGuardP
   if (requireAuth && !isLoggedIn) {
     return fallback || (
       <div className="flex min-h-screen items-center justify-center">
-        <AvePayLoader />
+        <AppLoader />
       </div>
     );
   }
@@ -68,7 +67,7 @@ export function AuthGuard({ children, requireAuth = true, fallback }: AuthGuardP
   if (!requireAuth && isLoggedIn) {
     return fallback || (
       <div className="flex min-h-screen items-center justify-center">
-        <AvePayLoader />
+        <AppLoader />
       </div>
     );
   }
@@ -82,28 +81,17 @@ export function AuthGuard({ children, requireAuth = true, fallback }: AuthGuardP
 
 export function useAuthStatus() {
   const { isLoggedIn, isLoading, user } = useAuth();
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setReady(true);
-  }, []);
-
   return {
     isAuthenticated: isLoggedIn,
-    isLoading: isLoading || !ready,
+    isLoading,
     user,
-    isGuest: !isLoggedIn && !isLoading && ready,
+    isGuest: !isLoggedIn && !isLoading,
   };
 }
 
 export function useAuthRedirect() {
   const router = useRouter();
   const { isLoggedIn, isLoading } = useAuth();
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setReady(true);
-  }, []);
 
   const redirectToLogin = (returnUrl?: string) => {
     const loginUrl = returnUrl
@@ -120,6 +108,6 @@ export function useAuthRedirect() {
     redirectToLogin,
     redirectToDashboard,
     isAuthenticated: isLoggedIn,
-    isLoading: isLoading || !ready,
+    isLoading,
   };
 }

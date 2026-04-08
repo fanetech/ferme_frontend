@@ -114,9 +114,9 @@ export function DataTableToolbar<T>({
                 onSelect={() => filter.onChange("ALL")}
               >
                 <div className="flex items-center space-x-3 py-1">
-                  <Checkbox 
+                  <Checkbox
                     checked={filter.value === "ALL" || !filter.value}
-                    readOnly
+                    disabled
                   />
                   <label className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                     Tous
@@ -132,7 +132,7 @@ export function DataTableToolbar<T>({
                   <div className="flex items-center space-x-3 py-1">
                     <Checkbox 
                       checked={filter.value === option.value}
-                      readOnly
+                      disabled
                     />
                     <label className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                       {option.label}

@@ -1,7 +1,3 @@
-export * from "./chat-widget";
-export * from "./payment-method";
-export * from "./theme-members";
-export * from "./exercise-minutes";
-export * from "./total-revenue";
-export * from "./latest-payments";
-export * from "./subscriptions";
+export { StatsCard } from "./stats-card";
+export { RecentFarms } from "./recent-farms";
+export { QuickActions } from "./quick-actions";
