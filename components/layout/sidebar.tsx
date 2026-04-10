@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect } from "react";
 import Link from "next/link";
-import { tpe_menu_config, filterMenuByPermissions, evaluatePermissions } from "@/lib/tpe-menu-config";
+import { menuConfig, filterMenuByPermissions, evaluatePermissions } from "@/lib/menu-config";
 import useAuth from "@/store/useAuth";
 import { ChevronRight, ChevronsUpDown } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -46,7 +46,7 @@ export default function Sidebar() {
   const { permissions } = useAuth();
 
   // Filtrer le menu selon les permissions de l'utilisateur
-  const filteredMenu = filterMenuByPermissions(tpe_menu_config, permissions);
+  const filteredMenu = filterMenuByPermissions(menuConfig, permissions);
 
   useEffect(() => {
     if (isMobile) setOpenMobile(false);

@@ -761,7 +761,7 @@ body {
     }
 }
 
-[data-theme-preset="avepay"] {
+[data-theme-preset="farm-green"] {
     --base-50: oklch(0.9851 0.003 45);
     --base-100: oklch(0.9692 0.006 45);
     --base-200: oklch(0.9263 0.012 45);

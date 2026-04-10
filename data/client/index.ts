@@ -1,15 +1,24 @@
 import { API_ENDPOINTS } from "./endpoints";
 import { HttpClient } from "./http-client";
 import Cookies from "js-cookie";
-import type { ApiResponse, LoginResponse } from "@/types";
+import type { ApiResponse, LoginResponse, RegisterRequest, RegisterResponse } from "@/types";
 
 class Client {
   auth = {
+    register: async (payload: RegisterRequest): Promise<ApiResponse<RegisterResponse>> => {
+      const data = await HttpClient.post<ApiResponse<RegisterResponse>>(API_ENDPOINTS.auth.register, payload);
+      if (data.success && data.data?.accessToken) {
+        Cookies.set("access_token", data.data.accessToken, { expires: 1 / 24, path: '/', sameSite: 'lax' });
+        Cookies.set("refresh_token", data.data.refreshToken, { expires: 30, path: '/', sameSite: 'lax' });
+      }
+      return data;
+    },
+
     login: async (payload: { phoneNumber: string; password: string }): Promise<ApiResponse<LoginResponse>> => {
       const data = await HttpClient.post<ApiResponse<LoginResponse>>(API_ENDPOINTS.auth.login, payload);
       if (data.success && data.data) {
-        Cookies.set("access_token", data.data.accessToken, { expires: 1 / 24 });
-        Cookies.set("refresh_token", data.data.refreshToken, { expires: 30 });
+        Cookies.set("access_token", data.data.accessToken, { expires: 1 / 24, path: '/', sameSite: 'lax' });
+        Cookies.set("refresh_token", data.data.refreshToken, { expires: 30, path: '/', sameSite: 'lax' });
       }
       return data;
     },

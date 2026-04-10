@@ -30,8 +30,7 @@ export function Stepper({ steps, currentStep, className }: StepperProps) {
                   className={cn(
                     "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors",
                     {
-                      "border-primary bg-primary text-primary-foreground": isActive,
-                      "border-primary bg-primary text-primary-foreground": isCompleted,
+                      "border-primary bg-primary text-primary-foreground": isActive || isCompleted,
                       "border-muted-foreground bg-background": !isActive && !isCompleted,
                     }
                   )}

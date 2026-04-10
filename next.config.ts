@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
     remotePatterns: [
@@ -21,15 +21,17 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: process.env.API_URL || "avepay-tpe-api.phantominbox.com"
+        hostname: process.env.API_URL || "localhost"
       },
     ]
   },
   async rewrites() {
+    const apiUrl = process.env.API_URL || 'http://localhost:8081/api';
     return [
       {
-        source: '/api/proxy/:path*',
-        destination: `${process.env.API_URL}/:path*`,
+        // Proxy all /api/* requests to the backend — avoids CORS in development
+        source: '/api/:path*',
+        destination: `${apiUrl}/:path*`,
       },
     ];
   },

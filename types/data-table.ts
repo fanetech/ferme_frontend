@@ -42,11 +42,12 @@ export interface DataTableProps<T> {
 export interface FilterConfig {
   key: string;
   label: string;
-  type: 'select' | 'multiselect' | 'date' | 'number';
+  type: 'select' | 'multiselect' | 'date' | 'number' | 'input';
   options?: { value: string; label: string }[];
   value?: string | string[];
   onChange: (value: string | string[] | any) => void;
   disabled?: boolean;
+  placeholder?: string;
 }
 
 export interface CreateButtonConfig {

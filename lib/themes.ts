@@ -49,8 +49,8 @@ export const THEMES = [
     colors: ["oklch(0.71 0.16 293.54)"]
   },
   {
-    name: "AvePay",
-    value: "avepay",
-    colors: ["oklch(0.615 0.185 35)", "oklch(0.615 0.175 230)"]
+    name: "Farm Green",
+    value: "farm-green",
+    colors: ["oklch(0.55 0.17 145)"]
   }
 ];

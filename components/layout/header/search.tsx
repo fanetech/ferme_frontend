@@ -44,8 +44,7 @@ export default function Search() {
   }, []);
 
   const CommandItemComponent: React.FC<CommandItemProps> = ({ item }) => {
-    // @ts-expect-error
-    const LucideIcon = icons[item.icon];
+    const LucideIcon = (icons as Record<string, any>)[item.icon];
 
     return (
       <CommandItem
