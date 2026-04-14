@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { useFarms, useFarmStatistics } from "@/data/farms";
 import { useFarmOrders, usePendingOrders } from "@/data/marketplace";
+import { safeArray } from "@/lib/utils/safe-array";
 
 const orderStatusLabels: Record<string, { label: string; className: string }> = {
   DRAFT: { label: "Brouillon", className: "bg-gray-100 text-gray-800" },
@@ -38,8 +39,8 @@ export default function FinancePage() {
   const { data: pendingData } = usePendingOrders(selectedFarmId);
 
   const stats = statsData?.data;
-  const orders = ordersData?.data ?? [];
-  const pendingOrders = pendingData?.data ?? [];
+  const orders = safeArray(ordersData?.data);
+  const pendingOrders = safeArray(pendingData?.data);
 
   // Compute totals from orders
   const totalRevenue = orders.filter((o: any) => o.orderStatus === "DELIVERED").reduce((sum: number, o: any) => sum + (o.netAmount ?? 0), 0);

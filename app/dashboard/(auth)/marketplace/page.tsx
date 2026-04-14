@@ -14,6 +14,7 @@ import { useFarmCustomers, useFarmProducts, useFarmOrders } from "@/data/marketp
 import { CustomerFormModal, ProductFormModal, OrderFormModal } from "./components";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import { safeArray } from "@/lib/utils/safe-array";
 
 const orderStatusLabels: Record<string, { label: string; className: string }> = {
   DRAFT: { label: "Brouillon", className: "bg-gray-100 text-gray-800" }, PENDING: { label: "En attente", className: "bg-yellow-100 text-yellow-800" },
@@ -40,9 +41,9 @@ export default function MarketplacePage() {
   const { data: custsData, isLoading: custLoading } = useFarmCustomers(selectedFarmId);
   const { data: prodsData, isLoading: prodLoading } = useFarmProducts(selectedFarmId);
   const { data: ordersData, isLoading: ordLoading } = useFarmOrders(selectedFarmId);
-  const customers = custsData?.data ?? [];
-  const products = prodsData?.data ?? [];
-  const orders = ordersData?.data ?? [];
+  const customers = safeArray(custsData?.data);
+  const products = safeArray(prodsData?.data);
+  const orders = safeArray(ordersData?.data);
 
   return (
     <div className="space-y-6">

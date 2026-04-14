@@ -12,6 +12,7 @@ import { useFarms } from "@/data/farms";
 import { useCurrentWeather, useWeatherForecast, useWeatherHistory } from "@/data/iot";
 import { sensorApi } from "@/data/iot";
 import { useQuery } from "@tanstack/react-query";
+import { safeArray } from "@/lib/utils/safe-array";
 
 const conditionLabels: Record<string, { label: string; icon: typeof Sun }> = {
   CLEAR: { label: "Dégagé", icon: Sun },
@@ -55,9 +56,9 @@ export default function WeatherPage() {
   });
 
   const current = currentData?.data;
-  const forecast = forecastData?.data ?? [];
-  const history = historyData?.data ?? [];
-  const anomalies = anomaliesData?.data ?? [];
+  const forecast = safeArray(forecastData?.data);
+  const history = safeArray(historyData?.data);
+  const anomalies = safeArray(anomaliesData?.data);
 
   const condInfo = current?.weatherCondition ? conditionLabels[current.weatherCondition] : null;
   const CondIcon = condInfo?.icon ?? CloudSun;

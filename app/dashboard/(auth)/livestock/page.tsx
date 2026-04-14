@@ -13,6 +13,7 @@ import { useFarmLivestock } from "@/data/livestock";
 import { LivestockFormModal } from "./components";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import { safeArray } from "@/lib/utils/safe-array";
 
 const statusLabels: Record<string, { label: string; className: string }> = {
   ACTIVE: { label: "Actif", className: "bg-green-100 text-green-800" },
@@ -43,7 +44,7 @@ export default function LivestockPage() {
   const { data: farmsData } = useFarms(0, 100);
   const farms = farmsData?.data?.content ?? [];
   const { data: livestockData, isLoading } = useFarmLivestock(selectedFarmId);
-  const allAnimals = livestockData?.data ?? [];
+  const allAnimals = safeArray(livestockData?.data);
   const animals = statusFilter === "ALL" ? allAnimals : allAnimals.filter((a: any) => a.status === statusFilter);
 
   return (

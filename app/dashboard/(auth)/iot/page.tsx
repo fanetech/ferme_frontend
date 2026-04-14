@@ -10,6 +10,7 @@ import { createSensorColumns, SensorFormModal } from "./components";
 import { useFarmSensors } from "@/data/iot";
 import { useFarms } from "@/data/farms";
 import { PermissionGuard } from "@/components/auth/permission-guard";
+import { safeArray } from "@/lib/utils/safe-array";
 import { PERMISSIONS } from "@/lib/constants/permissions";
 import type { IoTSensorResponse } from "@/types/iot";
 
@@ -22,7 +23,7 @@ export default function IoTPage() {
   const farms = farmsData?.data?.content ?? [];
 
   const { data: sensorsData, isLoading: sensorsLoading } = useFarmSensors(selectedFarmId);
-  const sensors = sensorsData?.data ?? [];
+  const sensors = safeArray(sensorsData?.data);
 
   const columns = useMemo(
     () => createSensorColumns({

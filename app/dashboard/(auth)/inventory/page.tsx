@@ -13,6 +13,7 @@ import { useFarmInventory, useLowStockItems } from "@/data/inventory";
 import { ItemFormModal } from "./components";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import { safeArray } from "@/lib/utils/safe-array";
 
 const categoryLabels: Record<string, string> = {
   SEED: "Semence", FERTILIZER: "Engrais", PESTICIDE: "Pesticide", HERBICIDE: "Herbicide",
@@ -37,8 +38,8 @@ export default function InventoryPage() {
   const farms = farmsData?.data?.content ?? [];
   const { data: inventoryData, isLoading } = useFarmInventory(selectedFarmId);
   const { data: lowStockData } = useLowStockItems(selectedFarmId);
-  const allItems = inventoryData?.data ?? [];
-  const lowStockItems = lowStockData?.data ?? [];
+  const allItems = safeArray(inventoryData?.data);
+  const lowStockItems = safeArray(lowStockData?.data);
   const items = categoryFilter === "ALL" ? allItems : allItems.filter((i: any) => i.category === categoryFilter);
 
   return (

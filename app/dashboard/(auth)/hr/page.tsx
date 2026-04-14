@@ -14,6 +14,7 @@ import { useFarmEmployees, useOverdueTasks, useTasksByStatus } from "@/data/hr";
 import { EmployeeFormModal, TaskFormModal } from "./components";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import { safeArray } from "@/lib/utils/safe-array";
 
 const contractLabels: Record<string, string> = { PERMANENT: "Permanent", TEMPORARY: "Temporaire", SEASONAL: "Saisonnier", DAILY: "Journalier", HOURLY: "Horaire", CONTRACT: "Contrat" };
 const priorityLabels: Record<string, { label: string; className: string }> = { LOW: { label: "Basse", className: "bg-gray-100 text-gray-800" }, MEDIUM: { label: "Moyenne", className: "bg-blue-100 text-blue-800" }, HIGH: { label: "Haute", className: "bg-orange-100 text-orange-800" }, URGENT: { label: "Urgente", className: "bg-red-100 text-red-800" } };
@@ -30,9 +31,9 @@ export default function HRPage() {
   const { data: overdueData } = useOverdueTasks();
   const { data: todoData } = useTasksByStatus("TODO");
   const { data: inProgressData } = useTasksByStatus("IN_PROGRESS");
-  const employees = employeesData?.data ?? [];
-  const overdueTasks = overdueData?.data ?? [];
-  const allTasks = [...overdueTasks, ...(todoData?.data ?? []), ...(inProgressData?.data ?? [])];
+  const employees = safeArray(employeesData?.data);
+  const overdueTasks = safeArray(overdueData?.data);
+  const allTasks = [...overdueTasks, ...safeArray(todoData?.data), ...safeArray(inProgressData?.data)];
 
   return (
     <div className="space-y-6">

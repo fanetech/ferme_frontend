@@ -14,6 +14,7 @@ import { useFarmParcels, useFarmCultivations } from "@/data/crops";
 import { ParcelFormModal, CultivationFormModal } from "./components";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { PERMISSIONS } from "@/lib/constants/permissions";
+import { safeArray } from "@/lib/utils/safe-array";
 import type { ParcelResponse } from "@/types/crop";
 
 const parcelStatusLabels: Record<string, { label: string; className: string }> = {
@@ -55,8 +56,8 @@ export default function CropsPage() {
   const farms = farmsData?.data?.content ?? [];
   const { data: parcelsData, isLoading: parcelsLoading } = useFarmParcels(selectedFarmId);
   const { data: cultivationsData, isLoading: cultivationsLoading } = useFarmCultivations(selectedFarmId);
-  const parcels = parcelsData?.data ?? [];
-  const cultivations = cultivationsData?.data ?? [];
+  const parcels = safeArray(parcelsData?.data);
+  const cultivations = safeArray(cultivationsData?.data);
 
   const handleAddCultivation = (parcel: ParcelResponse) => {
     setSelectedParcel(parcel);

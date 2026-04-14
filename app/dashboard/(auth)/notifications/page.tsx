@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNotifications, useNotificationStats, useMarkNotificationRead, useMarkAllNotificationsRead } from "@/data/notifications";
 import { SendNotificationModal, AlertRulesPanel } from "./components";
+import { safeArray } from "@/lib/utils/safe-array";
 
 const typeConfig: Record<string, { label: string; className: string; icon: typeof Bell }> = {
   ALERT: { label: "Alerte", className: "bg-red-100 text-red-800", icon: AlertTriangle },
@@ -37,7 +38,7 @@ export default function NotificationsPage() {
   const markRead = useMarkNotificationRead();
   const markAllRead = useMarkAllNotificationsRead();
 
-  const allNotifications = notifData?.data ?? [];
+  const allNotifications = safeArray(notifData?.data);
   const notifications = typeFilter === "ALL" ? allNotifications : allNotifications.filter((n: any) => n.notificationType === typeFilter);
   const stats = statsData?.data;
   const unreadCount = allNotifications.filter((n: any) => !n.isRead).length;
