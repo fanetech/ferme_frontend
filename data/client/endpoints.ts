@@ -417,4 +417,36 @@ export const API_ENDPOINTS = {
     failed: '/v1/audit/failed',
     stats: '/v1/audit/stats',
   },
+
+  // ======================================
+  // SYSTEM LOGS
+  // ======================================
+  systemLogs: {
+    search: '/v1/system/logs/search',
+    get: (id: string) => `/v1/system/logs/${id}`,
+    errors: '/v1/system/logs/errors',
+    serverErrors: '/v1/system/logs/server-errors',
+    securityViolations: '/v1/system/logs/security-violations',
+    securityAnalysis: '/v1/system/logs/security/analysis',
+    byUser: (userId: string) => `/v1/system/logs/users/${userId}`,
+    myLogs: '/v1/system/logs/my-logs',
+    bySession: (sessionId: string) => `/v1/system/logs/sessions/${sessionId}`,
+    stats: '/v1/system/logs/stats',
+    cleanup: '/v1/system/logs/cleanup',
+  },
+
+  // ======================================
+  // SYNC LOGS
+  // ======================================
+  syncLogs: {
+    list: '/v1/sync-logs',
+    get: (id: string) => `/v1/sync-logs/${id}`,
+    byFarm: (farmId: string) => `/v1/sync-logs/farms/${farmId}`,
+    byUser: (userId: string) => `/v1/sync-logs/users/${userId}`,
+    byDevice: (deviceId: string) => `/v1/sync-logs/devices/${deviceId}`,
+    lastByDevice: (deviceId: string) => `/v1/sync-logs/devices/${deviceId}/last`,
+    failed: '/v1/sync-logs/failed',
+    conflicts: '/v1/sync-logs/conflicts',
+    avgDuration: (farmId: string) => `/v1/sync-logs/farms/${farmId}/avg-duration`,
+  },
 };
