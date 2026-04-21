@@ -67,7 +67,7 @@ export function SensorFormModal({ open, onOpenChange, farmId }: SensorFormModalP
 
   const onSubmit = (data: FormData) => {
     createMutation.mutate(
-      { farmId, data: { sensorCode: data.sensorCode, name: data.name, sensorType: data.sensorType as any, manufacturer: data.manufacturer || undefined, model: data.model || undefined, serialNumber: data.serialNumber || undefined, unit: data.unit || undefined, readingIntervalMinutes: data.readingIntervalMinutes, minValue: data.minValue, maxValue: data.maxValue } },
+      { farmId, data: { sensorCode: data.sensorCode, name: data.name, sensorType: data.sensorType as any, manufacturer: data.manufacturer || undefined, model: data.model || undefined, serialNumber: data.serialNumber || undefined, unit: data.unit || undefined, readingIntervalMinutes: data.readingIntervalMinutes || undefined, minValue: data.minValue !== 0 ? data.minValue : undefined, maxValue: data.maxValue !== 0 ? data.maxValue : undefined } },
       { onSuccess: () => onOpenChange(false) }
     );
   };

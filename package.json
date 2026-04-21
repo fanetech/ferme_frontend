@@ -72,6 +72,7 @@
     "input-otp": "^1.4.2",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
+    "libphonenumber-js": "^1.12.41",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.522.0",
     "marked": "^15.0.12",

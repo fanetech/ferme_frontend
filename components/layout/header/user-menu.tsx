@@ -19,10 +19,17 @@ export default function UserMenu() {
   const { user, isLoggedIn } = useAuth();
   const logout = useLogout();
 
-  // Générer les initiales pour l'avatar
   const getInitials = () => {
     if (!user) return "U";
-    return user.phoneNumber?.slice(-2).toUpperCase() || "U";
+    const first = user.firstName?.charAt(0).toUpperCase() ?? "";
+    const last = user.lastName?.charAt(0).toUpperCase() ?? "";
+    return first && last ? `${first}${last}` : first || last || "U";
+  };
+
+  const getDisplayName = () => {
+    if (!user) return "Utilisateur";
+    const full = [user.firstName, user.lastName].filter(Boolean).join(" ");
+    return full || user.phoneNumber || "Utilisateur";
   };
 
   const handleLogout = () => {
@@ -34,7 +41,7 @@ export default function UserMenu() {
         <Avatar className="cursor-pointer">
           <AvatarImage
             src=""
-            alt={user?.phoneNumber || "User"}
+            alt={getDisplayName()}
           />
           <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
             {getInitials()}
@@ -47,15 +54,15 @@ export default function UserMenu() {
             <Avatar>
               <AvatarImage
                 src=""
-                alt={user?.phoneNumber || "User"}
+                alt={getDisplayName()}
               />
               <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
                 {getInitials()}
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold">{user?.phoneNumber || "Utilisateur"}</span>
-              <span className="text-muted-foreground truncate text-xs">{user?.roles?.[0] || ""}</span>
+              <span className="truncate font-semibold">{getDisplayName()}</span>
+              <span className="text-muted-foreground truncate text-xs">{user?.phoneNumber || ""}</span>
             </div>
           </div>
         </DropdownMenuLabel>
