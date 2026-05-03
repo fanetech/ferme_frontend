@@ -8,14 +8,30 @@
 ## Backend Reality Check
 
 > **Backend branch: `origin/koumbem`** — All modules are fully implemented.
-> Make sure the backend is running from this branch.
+> Make sure the backend is running from this branch.Lenovo@DESKTOP-8V5RU89 MINGW64 ~/Desktop/Aveplus/ferme-backend (main)
+$ [200~JAVA_HOME="/c/Program Files/Eclipse Adoptium/jdk-25.0.2.10-hotspot" \                              
+bash: [200~JAVA_HOME=/c/Program Files/Eclipse Adoptium/jdk-25.0.2.10-hotspot: No such file or directory
 
-**29 controllers, ~260+ endpoints across 12 modules — ALL READY:**
+Lenovo@DESKTOP-8V5RU89 MINGW64 ~/Desktop/Aveplus/ferme-backend (main)
+$   DB_URL="jdbc:postgresql://localhost:5432/gestion_ferme" \                                            DB_USERNAME="postgres" \                                                                           
+bash:  : command not found
 
-| Module | Controllers | Endpoints | Key |
-|--------|------------|-----------|-----|
-| Auth | AuthController | 12 | register, login, refresh, logout, forgot/reset password, PIN |
-| Users | UserController | 21 | CRUD, status, search, farm access, primary farm |
+Lenovo@DESKTOP-8V5RU89 MINGW64 ~/Desktop/Aveplus/ferme-backend (main)
+$   DB_PASSWORD="postgres123" \                                                                      
+
+bash:  : command not found
+
+Lenovo@DESKTOP-8V5RU89 MINGW64 ~/Desktop/Aveplus/ferme-backend (main)
+$   JWT_SECRET="ferme-gestion-super-secret-key-2024-minimum-256bits-for-hs256!!" \
+  JWT_SECRET="ferme-gestion-super-secret-key-2024-minimum-256bits-for-hs256  DB_PASSWORD="postgres123" \                                                                        " \
+>   SWAGGER_USERNAME="admin" \
+>   SWAGGER_PASSWORD="swagger@admin123" \
+>   LOG_LEVEL="INFO" \
+>   LOG_PATH="logs" \
+>   ./mvnw spring-boot:run~
+/c/Users/Lenovo/.m2/wrapper/dists/apache-maven-3.9.11/a2d47e15/bin/mvn: line 93: cd: /c/Program Files/Eclipse Adoptium/jdk-17.0.10+7: No such file or directory
+The JAVA_HOME environment variable is not defined correctly,
+this environment variable is needed to run this program.ss, primary farm |
 | User-Organization | UserOrganizationController | 12 | Add/remove members, roles, primary org |
 | Roles | RoleController | 10 | CRUD, search, assign permissions |
 | Permissions | PermissionController | 7 | CRUD, by module, search |
